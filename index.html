@@ -1275,8 +1275,10 @@
                 }
             }
 
-            // Create unique key for separate option orders
-            const cartItemKey = prod.id + "_" + JSON.stringify(chosen);
+            // Create unique key for separate option orders using HTML-safe encoding (base64)
+            const optionsStr = JSON.stringify(chosen);
+            const safeOptionsKey = btoa(unescape(encodeURIComponent(optionsStr)));
+            const cartItemKey = prod.id + "_" + safeOptionsKey;
             const existingItem = cart.find(item => item.key === cartItemKey);
 
             if (existingItem) {
